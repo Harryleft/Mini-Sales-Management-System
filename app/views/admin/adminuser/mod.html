@@ -1,0 +1,43 @@
+{% include "public/header.html"%}
+            <!-- [ 右侧 ] 结束 -->
+            <div class="page-header">
+                <div class="row align-items-center">
+                    <div class="col ml-2">
+                        <h3 class="page-title mt-2 ">系统管理</h3>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/admin">首页</a></li>
+                            <li class="breadcrumb-item"><a href="/admin/adminuser">管理员管理</a></li>
+                            <li class="breadcrumb-item active"></li><a>修改密码</a>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <form class="card mb-4" method="post" action="/admin/adminuser/doupdate">
+                <h4 class="card-header"><strong>修改密码</strong></h4>
+                <div class="card-body demo-vertical-spacing-sm">
+                    <input type="hidden" name="id" value="{{id}}">
+                    <div class="input-group input-group-lg">
+                        <input type="text" name="name" class="form-control" value="{{name}}">
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="input-group input-group-lg">
+                        {%if session.name == 'admin'%}
+                        <input type="text" class="form-control" name="type" value="{{type}}" placeholder="1表示超级管理员，0表示普通管理员">
+                        {% endif %}
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="input-group-lg">
+                        <input type="password" class="form-control" name="pw" placeholder="请输入新的管理员密码。如无需修改请留空">
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="input-group-lg">
+                        <a class="bg_f8" align="right">上次登录：</a>
+                        <a>{{ltime | date("Y年m月d日")}}</a>
+                    </div>
+                    <div class="text-right">
+                        <button type="submit" class="btn btn-primary btn-lg">确认修改</button>
+                    </div>
+                </div>
+            </form>
+{% include "public/footer.html"%}

@@ -1,0 +1,71 @@
+{% include "public/header.html "%}
+<div class="page-header">
+    <div class="row align-items-center ml-2">
+        <div class="col">
+            <h3 class="page-title mt-2">销售管理</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin">首页</a></li>
+                <li class="breadcrumb-item active">进货管理</li>
+            </ul>
+        </div>
+        <div class="col-auto">
+            <a href="/admin/addProduct/add" class="btn btn-primary mr-1">
+                <i class="fas fa-plus"></i>
+            </a>
+        </div>
+    </div>
+
+<div class="card">
+    <div class="card-body">
+        <table class="table table-center table-hover datatable">
+            <thead  class="thead-light">
+            <tr>
+                <th>进货时间</th>
+                <th>商品名称</th>
+                <th>进货数量</th>
+                <th>进货金额</th>
+                <th>最后修改时间</th>
+                <th>进货状态</th>
+                <th class="text-center">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for v in product %}
+            {%if v.productNum > 0%}
+            <tr>
+                <td>{{v.satime | date('Y年m月d日')}}</td>
+                <td>{{v.productName}}</td>
+                <td>{{v.productNum}}</td>
+                <td>￥{{v.totalMoney}}</td>
+                        {%if v.sltime == '0'%}
+                        <td>{{v.satime | date('Y年m月d日')}}</td>
+                        {%else%}
+                        <td>￥{{v.sltime | date('Y年m月d日')}}</td>
+                        {%endif%}
+
+                {% if v.status == '1'%}
+                     <td class="hidden">已完成</td>
+                {%else%}
+                    <td class="text-danger">未完成</td>
+                {%endif%}
+                <td class="text-center">
+                    {% if v.status != '1' or session.name == 'admin' %}
+                    <a class="btn btn-sm btn-success" href="/admin/addProduct/mod/{{v.jid}}">
+                        <i class="far fa-edit "></i> 编辑
+                    </a>
+                    {%endif%}
+                    {% if session.name == "admin"  %}
+                    <a href="/admin/addProduct/del/{{v.jid}}" class="btn btn-sm btn-white text-danger" onclick="return confirm('你确定要删除【{{v.productName}}】的进货记录吗？')">
+                        <i class="far fa-trash-alt mr-1"></i>删除
+                    </a>
+                    {% endif %}
+                </td>
+            </tr>
+            {%endif%}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% include "public/footer.html" %}

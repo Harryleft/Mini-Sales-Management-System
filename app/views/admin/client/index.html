@@ -1,0 +1,77 @@
+{% include "public/header.html "%}
+            <!-- [ 右侧 ] 结束 -->
+            <div class="page-header">
+                <div class="row align-items-center">
+                    <div class="col ml-3">
+                        <h3 class="page-title mt-2">客户管理</h3>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/admin" >首页</a></li>
+                            <li class="breadcrumb-item active"></li><a>客户信息</a>
+                        </ul>
+                    </div>
+                    <div class="col-auto">
+                        <a href="/admin/client/add" class="btn btn-primary mr-1">
+                            <i class="fas fa-plus"></i>
+                        </a>
+                    </div>
+                </div>
+            <div class="row">
+                <div class="col-lg-12 ">
+                    <div class="card card-table">
+                        <div class="card-body">
+                                <form method="post" id="form">
+                                <table class="table table-center table-hover datatable">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>客户编号</th>
+                                            <th>客户类型</th>
+                                            <th>客户姓名</th>
+                                            <th>联系方式</th>
+                                            <th class="text-center">客户地址</th>
+                                            <th>添加时间</th>
+                                            <th>最后修改时间</th>
+                                            <th class="text-right">操作</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody  id="show_tbody">
+                                    {% for v in data %}
+                                        <tr>
+                                            <td><a href="/admin/client/detail/{{v.cid}}" >KH{{v.cid}}</a></td>
+                                                {% if v.type == 1 %}
+                                                <td>个人客户</td>
+                                                {% else %}
+                                                <td>工程客户</td>
+                                                {% endif%}
+                                            <td>{{v.clientName}}</td>
+                                            <td>{{v.clientPhone}}</td>
+                                            <td class="text-center">{{v.clientProvince}}{{v.clientCity}}{{v.clientBlock}}{{v.clientDetailAddress}}</td>
+                                            <td>{{v.atime | date('Y-m-d')}}</td>
+                                            {%if ltime == 0%}
+                                            <td>{{v.atime | date('Y-m-d')}}</td>
+                                            {%else%}
+                                            <td>{{v.ltime | date('Y-m-d')}}</td>
+                                            {%endif%}
+                                            <td class="class = text-right">
+                                                <a href="/admin/client/mod/{{v.cid}}" class="btn btn-sm btn-white text-success mr-2"><i class="far fa-edit mr-1"></i> 编辑</a>
+                                                {% if session.name == "admin"  %}
+                                                <a href="/admin/client/del/{{v.cid}}" class="btn btn-sm btn-white text-danger mr-2" onclick="return confirm('你确定要删除【{{v.clientName}}】客户吗？')"><i
+                                                        class="far fa-trash-alt ml-1"></i>删除</a>
+                                                {% endif %}
+
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                                </form>
+
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% include "public/footer.html" %}

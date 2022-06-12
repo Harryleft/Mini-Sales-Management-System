@@ -1,0 +1,98 @@
+{% include "public/header.html" %}
+<!-- [ 头部 ] 结束 -->
+<div class="page-header">
+    <div class="row align-items-center ml-2">
+        <div class="col">
+            <h3 class="page-title mt-2">商品管理</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin">首页</a></li>
+                <li class="breadcrumb-item active"><a href="/admin/product">商品列表</a></li>
+                <li class="breadcrumb-item "><a>修改商品</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <h6 class="card-header">添加商品</h6>
+                <div class="card-body">
+                    <form method="post" action="/admin/product/doupdate">
+                        <input type="text" value="{{productMark}}" name="productMark" hidden>
+                        <div class="form-group ">
+                            <i style="color: red">*</i>
+                            <label class="form-label">商品名称</label>
+                            <input type="text" class="form-control" value="{{productName}}" name="productName"
+                                   maxlength="6">
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="form-group ">
+                            <i style="color: red">*</i>
+                            <label class="form-label">商品体积</label>
+                            <input type="number" class="form-control"
+                                   oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="{{volume}}"
+                                   name="volume">
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="form-group ">
+                            <i style="color: red">*</i>
+                            <label class="form-label">商品规格</label>
+                            <select class="custom-select" name="weight">
+                                {%for v in product%}
+                                <option value="{{v.weight}}" {{weight== v.weight ?
+                                'selected' : '' }} >{{v.weight}}</option>
+                                {%endfor%}
+                            </select>
+                            <div class="clearfix"></div>
+                        </div>
+
+                        <div class="form-group ">
+                            <i style="color: red">*</i>
+                            <label class="form-label">商品分类</label>
+                            <select name="cid" class="custom-select">
+                                <option value="0" {{cid== 0 ?
+                                'selected': '' }}>---根分类---</option>
+                                {% for v in cats %}
+                                <option value="{{v.id}}" {{cid== v.id ?
+                                'selected' : '' }}>
+                                {%for i in 0..v.level*3 %}
+                                &nbsp;
+                                {%endfor%}
+                                |-{{v.catname}}
+                                </option>
+                                {% endfor %}
+                            </select>
+                            <div class="clearfix"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <i style="color: red">*</i>
+                            <label class="form-label">销售价格</label>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">￥</span>
+                                <input type="number" class="form-control"
+                                       oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="{{saleMoney}}"
+                                       name="saleMoney" maxlength="4" placeholder="请输入商品单价">
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <i style="color: red">*</i>
+                            <label class="form-label">商品进价</label>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">￥</span>
+                                <input type="number" class="form-control"
+                                       oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="{{costMoney}}"
+                                       name="costMoney" maxlength="9" placeholder="请输入商品进价">
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                        <div class="text-right mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg">确认修改</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include "public/footer.html" %}

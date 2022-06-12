@@ -1,0 +1,94 @@
+{% include "public/header.html" %}
+<!-- [ 头部 ] 结束 -->
+<div class="page-header">
+    <div class="row align-items-center ml-2">
+        <div class="col">
+            <h3 class="page-title mt-2">销售管理</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin">首页</a></li>
+                <li class="breadcrumb-item active"></li>
+                <a>商品列表</a>
+            </ul>
+        </div>
+        <div class="col-auto">
+            <a href="/admin/product/add" class="btn btn-primary mr-1">
+                <i class="fas fa-plus"></i>
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card card-table">
+                <div class="card-body">
+                    <table class="table table-center table-hover datatable">
+                        <thead class="thead-light">
+                        <tr>
+                            <th>商品名称</th>
+                            <th>商品规格</th>
+                            <th>商品分类</th>
+                            <th>销售价格</th>
+                            <th>成本价格</th>
+                            <th>单件利润</th>
+                            <th>库存状态</th>
+                            <th>销售数量</th>
+                            <th>库存数</th>
+                            <th>退货数量</th>
+                            <!--【设置操作权限】 开始-->
+                            {% if session.name == "admin" or session.name == "productkeeper"%}
+                            <th class="text-right">操作</th>
+                            {%endif%}
+                            <!--【设置操作权限】 结束-->
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!--【开始遍历商品】开始-->
+                        {% for v in data %}
+                        <tr>
+                            <td>{{v.productName}}</td>
+                            <td>{{v.volume}}{{v.weight}}</td>
+                            <td>{{cats[v.cid].catname}}</td>
+                            <td>￥{{v.saleMoney}}</td>
+                            <td>￥{{v.costMoney}}</td>
+                            <!--单件利润 开始-->
+                            <td class="text-left text-success">￥{{v.saleMoney - v.costMoney }}</td>
+                            <!--单件利润结束-->
+                            <!--判断库存状态 开始-->
+                            {% if v.inventoryNum - v.saleNum > 1 %}
+                            <td class="text-left">充足</td>
+                            {% else %}
+                            <td class="text-left text-danger">短缺</td>
+                            {% endif %}
+                            <!--判断库存状态 结束-->
+                            <td>{{v.saleNum}}</td>
+                            <!--【库存数量】开始-->
+                            <td class="text-success">{{v.inventoryNum - saleNum}}</td>
+                            <!--【库存数量】 结束-->
+                            <td>{{v.returnNum}}</td>
+                            <!--【设置操作权限】 开始-->
+                            <td class="text-right">
+                                {% if session.name == "admin" or session.name == "productkeeper" %}
+                                <a class="btn btn-sm btn-success " href="/admin/product/mod/{{v.productMark}}">
+                                    <i class="far fa-edit "></i> 编辑
+                                </a>
+                                {% if session.name == "admin" %}
+                                <a href="/admin/product/del/{{v.productMark}}"
+                                   class="btn btn-sm btn-white text-danger mr-2"
+                                   onclick="return confirm('你确定要删除【{{v.productName}}】商品吗？')">
+                                    <i class="far fa-trash-alt mr-1 "></i>删除
+                                </a>
+                                {% endif %}
+                                {% endif %}
+                            </td>
+                            <!--【设置操作权限】 结束-->
+                        </tr>
+                        {% endfor %}
+                        <!--【遍历商品】结束-->
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% include "public/footer.html" %}

@@ -1,0 +1,105 @@
+{% include "public/header.html "%}
+<div class="page-header">
+    <div class="row align-items-center ml-2">
+        <div class="col">
+            <h3 class="page-title mt-2">销售管理</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin">首页</a></li>
+                <li class="breadcrumb-item "><a href="/admin/addProduct">进货管理</a></li>
+                <li class="breadcrumb-item active"><a>添加进货</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <h6 class="card-header">添加进货</h6>
+                <div class="card-body">
+                    <form method="post"  name="myForm" onsubmit="return validateForm()" >
+                        <div class="add-remove text-left">
+                            <a class="btn btn-sm btn-white text-success mr-2"><i class="fas fa-plus-circle" id="btnAdd">添加</i ></a>
+                            <a class="btn btn-sm btn-white text-danger mr-2 "> <i class="fas fa-minus-circle" id="btnSub" >删除</i></a>
+                        </div>
+                        <div class="text-right">
+                            <button type="submit" name="do_submit" class="btn btn-primary">确认添加</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    window.onload = function () {
+        //增加或减少商品
+        $(document).ready(function () {
+            let row_number = 0;
+            //add method
+            $("#btnAdd").click(function () {
+                row_number++;
+                $("form").append("<div class=\"form-row\"  id="+row_number+">\n" +
+                    "                            <div class=\"form-group col-md-4\">\n" +
+                    "                                <i style=\"color: red\">*</i>\n" +
+                    "                                <label class=\"form-label\">供应商名称/编号</label>\n" +
+                    "                                <select name=\"goods["+row_number+"][supplierMark]\" class=\"custom-select\" >\n" +
+                    "                                {%for s in supplierData%}\n" +
+                    "                                <option value=\"{{s.supplierMark}}\">{{s.supplierMark}}/{{s.supplierName}}</option>\n" +
+                    "                                {% endfor %}\n" +
+                    "                                </select>\n" +
+                    "                                <div class=\"clearfix\"></div>\n" +
+                    "                            </div>\n" +
+                    "                            <div class=\"form-group col-md-2 \">\n" +
+                    "                                <i style=\"color: red\">*</i>\n" +
+                    "                                <label class=\"form-label\">商品名称/编号/价格</label>\n" +
+                    "                                <select name=\"goods["+row_number+"][productMark]\" class=\"custom-select\" >\n" +
+                    "                                {%for s in productData%}\n" +
+                    "                                <option value=\"{{s.productMark}}\">{{s.productMark}}/{{s.productName}}/{{s.costMoney}}</option>\n" +
+                    "                                {% endfor %}\n" +
+                    "                                </select>\n" +
+                    "                            </div>\n" +
+                    "                            <div class=\"form-group col-md-2 \">\n" +
+                    "                                <i style=\"color: red\">*</i>\n" +
+                    "                                <label class=\"form-label\">进货数量</label>\n" +
+                    "                                <input type=\"number\" class=\"form-control\"name=\"goods["+row_number+"][productNum]\" placeholder=\"请输入进货数量\"maxlength=\"3\" >\n" +
+                    "                                <div class=\"clearfix\"></div>\n" +
+                    "                            </div>\n" +
+                    "                            <div class=\"form-group col-md-2 \">\n" +
+                    "                                <i style=\"color: red\">*</i>\n" +
+                    "                                <label class=\"form-label\">进货总价</label>\n" +
+                    "                                <input type=\"number\" class=\"form-control\"name=\"goods["+row_number+"][totalMoney]\" placeholder=\"请输入进货总价\"maxlength=\"5\" >\n" +
+                    "                                <div class=\"clearfix\"></div>\n" +
+                    "                            </div>\n" +
+                    "                            <div class=\"form-group  col-md-2 \">\n" +
+                    "                                <i style=\"color: red\">*</i>\n" +
+                    "                                <label class=\"form-label\">进货状态</label>\n" +
+                    "                                <select name=\"goods["+row_number+"][status]\" class=\"custom-select\">\n" +
+                    "                                    <option>1</option>\n" +
+                    "                                    <option>0</option>\n" +
+                    "                                </select>\n" +
+                    "                            </div>\n" +
+                    "                        </div>");
+
+            });
+            //删除方法
+            $("#btnSub").click(function () {
+                let row_number = $(".form-row").length;
+                $("div[id='"+(row_number-1)+"']").remove();
+            });
+        })
+    }
+</script>
+<script>
+    function validateForm()
+    {
+        let x = document.forms["myForm"]["fname"].value;
+        if (x === null || x === "")
+        {
+            alert("姓必须填写");
+            return false;
+        }
+    }
+</script>
+
+{% include "public/footer.html" %}

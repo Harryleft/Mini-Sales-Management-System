@@ -1,0 +1,55 @@
+{% include "public/header.html" %}
+<!-- [ 右侧 ] 结束 -->
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col ml-3">
+            <h3 class="page-title mt-2">商品管理</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin">首页</a></li>
+                <li class="breadcrumb-item "><a href="/admin/category">商品分类</a></li>
+                <li class="breadcrumb-item active"><a>修改分类</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card card-table">
+                <div class="card-body">
+                    <form action="/admin/category/doupdate" method="post">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>分类名称：</label>
+                                    <input type="text" name="catnem" value="{{catname}}" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>上级分类</label>
+                                    <select name="pid">
+                                        <option value="0" {{pid== 0 ?
+                                        'selected': '' }}>---根分类---</option>
+                                        {% for v in cats %}
+                                        <option value="{{v.id}}" {{pid== v.id ?
+                                        'selected' : '' }}>
+                                        {%for i in 0..v.level*3 %}
+                                        &nbsp;
+                                        {%endfor%}
+                                        |-{{v.catname}}
+                                        </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>分类排序：</label>
+                                    <input type="text" name="ord" value="{{ord}}" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-right ">
+                            <input type="submit" class="btn btn-primary btn-lg" value="确认修改"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include "public/footer.html "%}

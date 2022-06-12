@@ -1,0 +1,65 @@
+{% include "public/header.html "%}
+
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-sm-12 ml-3">
+                        <h3 class="page-title ">客户管理</h3>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/admin">首页</a></li>
+                            <li class="breadcrumb-item"><a href="/admin/client">客户信息</a></li>
+                            <li class="breadcrumb-item active">修改客户信息</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- /Page Header -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title ">修改客户信息</h4>
+                            <form action="/admin/client/doupdate" method="post">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <input name="clientMark" value="{{clientMark}}" hidden>
+                                        <div class="form-group">
+                                            <label><strong>客户姓名</strong></label>
+                                            <input type="text" class="form-control" value="{{clientName}}" name="clientName" maxlength="4">
+                                        </div>
+                                        <div class="form-group">
+                                            <label><strong>客户类型</strong></label>
+                                            <input type="text" class="form-control" value="{{clientType}}" name="clientType" placeholder="1表示个人客户，0表示公司客户" maxlength="1">
+                                        </div>
+                                        <div class="form-group">
+                                            <label><strong>联系方式</strong></label>
+                                            <input type="text" class="form-control" value="{{clientPhone}}" name="clientPhone" maxlength="11">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label"><strong>客户地址</strong></label>
+                                            <select name="clientProvince"  class="custom-select">
+                                                <option >海南省</option>
+                                            </select>
+                                            <select name="clientCity" class="custom-select">
+                                                <option >海口市</option>
+                                            </select>
+                                            <select name="clientBlock"  class="custom-select">
+                                                {%for v in client%}
+                                                <option value="{{v.clientBlock}}" {{clientBlock == v.clientBlock ? 'selected' : '' }}>
+                                                {{v.clientBlock}}
+                                                </option>
+                                                {%endfor%}
+                                            </select>
+                                            <input type="text" class="form-control" name="clientDetailAddress" value="{{clientDetailAddress}}" maxlength="30" placeholder="请输入详细地址" >
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-right mt-4">
+                                    <button type="submit" class="btn btn-primary btn-lg">确认修改</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+{% include "public/footer.html" %}

@@ -1,0 +1,22 @@
+{
+    "require": {
+        "noahbuscher/macaw": "dev-master",
+        "twig/twig": "^3.0",
+        "catfan/medoo": "^1.7",
+        "gregwar/captcha": "^1.1",
+         "ext-json": "*"
+    },
+"autoload":{
+    	"psr-4":{
+    		"admin\\":"app/controllers/admin/",    		
+    		"models\\":"app/models/",   
+    		"controllers\\":"app/controllers/"
+    	},
+      "files": [
+        "app/helpers.php",
+        "config.inc.php"
+      ]
+    }
+
+
+}

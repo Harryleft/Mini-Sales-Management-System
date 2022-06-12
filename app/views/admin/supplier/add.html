@@ -1,0 +1,78 @@
+{% include "public/header.html "%}
+            <!-- [ 头部 ] 结束 -->
+            <div class="page-header">
+                <div class="row align-items-center ml-2">
+                    <div class="col">
+                        <h3 class="page-title mt-2">销售管理</h3>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/admin">首页</a></li>
+                            <li class="breadcrumb-item "><a href="/admin/supplier">供应商管理</a></li>
+                            <li class="breadcrumb-item active"><a>添加供应商</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <h6 class="card-header">添加供应商</h6>
+                            <div class="card-body">
+                                <form method="post" action="/admin/supplier/add">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-3">
+                                            <i style="color: red">*</i>
+                                            <label class="form-label">供应商名</label>
+                                            <input type="text" class="form-control" name="supplierName" placeholder="请输入供应商名" maxlength="30" >
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <i style="color: red">*</i>
+                                            <label class="form-label">供应商地址</label>
+                                            <select name="province">
+                                                <option >海南省</option>
+                                            </select>
+                                            <select name="city">
+                                                <option >海口市</option>
+                                            </select>
+                                            <select name="block">
+                                                <option >秀英区</option>
+                                                <option >美兰区</option>
+                                                <option >琼山区</option>
+                                                <option >龙华区</option>
+                                            </select>
+                                            <input type="text" class="form-control"name="detailAddress" maxlength="30" placeholder="请输入详细地址" >
+                                            <div class="clearfix"></div>
+                                        </div>
+
+                                        <div class="form-group col-md-2">
+                                            <i style="color: red">*</i>
+                                            <label class="form-label">供应商联系人</label>
+                                            <input type="text" class="form-control"name="contactName"placeholder="请输入供应商联系人" maxlength="9">
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="form-group col-md-3 ">
+                                            <i style="color: red">*</i>
+                                            <label class="form-label">供应商联系电话</label>
+                                            <input type="text" class="form-control"name="contactPhone" placeholder="请输入供应商联系电话"maxlength="11" >
+                                        </div>
+                                    </div>
+                                    <div class="text-right mt-4">
+                                        <button type="submit" name="do_submit" class="btn btn-primary">确认添加</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+<script src="{{url}}/libs/laydate/laydate.js"></script>
+<script type="text/javascript">
+
+    lay('#version').html('-v'+ laydate.v);
+
+    //执行一个laydate实例
+    laydate.render({
+        elem: '#laydate' //指定元素
+    });
+</script>
+{% include "public/footer.html" %}

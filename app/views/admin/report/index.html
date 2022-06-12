@@ -1,0 +1,68 @@
+{% include "public/header.html "%}
+
+
+            <!-- [ 头部 ] 结束 -->
+            <div class="page-header">
+                <div class="row align-items-center ml-2">
+                    <div class="col">
+                        <h3 class="page-title mt-2">财务管理</h3>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/admin">首页</a></li>
+                            <li class="breadcrumb-item active"></li>
+                            <a>收支表</a>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card card-table">
+                            <div class="card-body">
+                                <table class="table  table-hover" id="myTables" >
+                                    <thead class="thead-light">
+                                    <tr style="text-align: left">
+                                        <th>日期</th>
+                                        <th>支出</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {%for v in TotalOutData%}
+                                    <tr style="text-align: left">
+                                        <td>{{v.supplierTime | date('Y年m月d日')}}</td>
+                                        <td>{{v.totalMoney}}元</td>
+                                    </tr>
+                                    {%endfor%}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card card-table">
+                            <div class="card-body">
+                                <table  class="table table-center table-hover "  id="myTakeTables">
+                                    <thead class="thead-light">
+                                    <tr style="text-align: left">
+                                        <th>日期</th>
+                                        <th>收入</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {%for v in TakeData%}
+                                    <tr style="text-align: left">
+                                        <td>{{v.atime | date('Y年m月d日')}}</td>
+                                        <td>{{v.totalMoney}}元   </td>
+                                    </tr>
+                                    {%endfor%}
+                                    <tr style="text-align: left" class="fixed-bottom">
+                                        <td></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+{% include "public/footer.html" %}

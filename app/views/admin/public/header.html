@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" class="material-style layout-fixed">
+<head>
+    <title>{{title}}</title>
+    <!--jquery-->
+    <script src="{{url}}/js/jquery-3.3.1.min.js"></script>
+    <!-- Datatables CSS -->
+    <link rel="stylesheet" href="{{url}}/plugins/datatables/datatables.css">
+    <!-- Icon fonts -->
+    <link rel="stylesheet" href="{{url}}/fonts/fontawesome.css">
+    <link rel="stylesheet" href="{{url}}/fonts/ionicons.css">
+    <link rel="stylesheet" href="{{url}}/fonts/linearicons.css">
+    <link rel="stylesheet" href="{{url}}/fonts/feather.css">
+
+    <!-- Core stylesheets -->
+    <link rel="stylesheet" href="{{url}}/css/bootstrap-material.css">
+    <!--    <link rel="stylesheet" href="{{url}}/css/shreerang-material.css">-->
+    <link rel="stylesheet" href="{{url}}/css/shreerang-material.css">
+    <!--    <link rel="stylesheet" href="{{url}}/css/uikit.css">-->
+</head>
+
+<body>
+
+<div class="layout-wrapper layout-2">
+    <div class="layout-inner">
+        <!-- [ 左侧导航栏 ] 开始 -->
+        <div id="layout-sidenav" class="layout-sidenav sidenav sidenav-vertical bg-dark">
+            <ul class="sidenav-inner">
+                <div class="app-brand demo">
+                    <a href="/admin" class="app-brand-text  text-big text-center sidenav-text font-weight-normal ">祈祥涂装商行销售管理系统</a>
+                </div>
+                <div class="sidenav-divider mt-0"></div>
+                <!-- 导航 -->
+                <li class="sidenav-item">
+                    <a href="/admin" class="sidenav-link">
+                        <div>首页</div>
+                    </a>
+                </li>
+                {%if session.name == 'productkeeper' or session.name == 'admin'or session.name == 'salekeeper'%}
+                <div class="sidenav-divider mt-0"></div>
+                <!-- 商品管理 -->
+                <li class="sidenav-item">
+                    <!--                    <a href="/admin/product" class="sidenav-link sidenav-toggle">-->
+                    <!--                        <i class="sidenav-icon feather icon-box"></i>-->
+                    <!--                        <div>商品管理</div>-->
+                    <!--                    </a>-->
+                    <ul class="sidenav-item">
+                        <li class="sidenav-item">
+                            <a href="/admin/product" class="sidenav-link">
+                                <div>商品列表</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/category" class="sidenav-link">
+                                <div>商品分类</div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                {%endif%}
+                {%if session.name == 'salekeeper' or session.name == 'admin'%}
+                <div class="sidenav-divider mt-0"></div>
+                <!-- 销售管理 -->
+                <li class="sidenav-item">
+                    <ul class="sidenav-item">
+                        <li class="sidenav-item">
+                            <a href="/admin/transaction" class="sidenav-link">
+                                <div>交易管理</div>
+                            </a>
+                        </li>
+                        <li class="sidenav-item">
+                            <a href="/admin/supplier" class="sidenav-link">
+                                <div>供应商管理</div>
+                            </a>
+                        </li>
+                        <li class="sidenav-item">
+                            <a href="/admin/addProduct" class="sidenav-link">
+                                <div>进货管理</div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <div class="sidenav-divider mt-0"></div>
+                {%endif%}
+                {%if session.name == 'admin'%}
+                <!--  客户管理 -->
+                <li class="sidenav-item">
+                    <ul class="sidenav-item">
+                        <li class="sidenav-item">
+                            <a href="/admin/client" class="sidenav-link">
+                                <div>客户信息</div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                {%endif%}
+                <div class="sidenav-divider mt-0"></div>
+                <!--  系统管理 -->
+                {%if session.name == 'admin'%}
+                <li class="sidenav-item">
+                <li class="sidenav-item">
+                    <a href="/admin/adminuser" class="sidenav-link">
+                        <div>账号管理</div>
+                    </a>
+                </li>
+
+            </ul>
+            </li>
+            {%endif%}
+            </ul>
+        </div>
+        <!-- [ 左侧导航栏 ] 结束 -->
+        <!-- [ 右侧 ] 开始 -->
+        <div class="layout-container">
+            <!-- [ 头部 ] 开始 -->
+            <nav class="layout-navbar navbar navbar-expand-lg align-items-lg-center bg-white container-p-x"
+                 id="layout-navbar">
+                <div class="navbar-collapse collapse" id="layout-navbar-collapse">
+                    <!-- Divider -->
+                    <hr class="d-lg-none w-100 my-2">
+                    <div class="nav-responsive-lg">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">商品管理
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="/admin/product">商品列表</a>
+                                <a class="dropdown-item" href="/admin/category">商品分类</a>
+                            </div>
+                        </div>
+                        {%if session.name == 'salekeeper' or session.name == 'admin'%}
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">销售管理
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="/admin/transaction">交易管理</a>
+                                <a class="dropdown-item" href="/admin/supplier">供应商管理</a>
+                                <a class="dropdown-item" href="/admin/addProduct">进货管理</a>
+                            </div>
+                        </div>
+                        {%endif%}
+                        {%if session.name == 'admin'%}
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">客户管理
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="/admin/client">客户信息</a>
+                            </div>
+                        </div>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">系统管理
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="/admin/adminuser">账号管理</a>
+                            </div>
+                        </div>
+                        {%endif%}
+                    </div>
+
+                    <div class="navbar-nav align-items-lg-center ml-auto">
+                        <!-- Divider -->
+                        <div class="demo-navbar-user nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown">
+                                    <span class="d-inline-flex flex-lg-row-reverse align-items-center align-middle">
+                                        <span class="px-1 mr-lg-2 ml-2 ml-lg-0">欢迎您【{{session.name}}】管理员</span>
+                                    </span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a href="/admin/login/logout" onclick="return confirm('【{{session.name}}】，您确定要退出系统吗？')"
+                                   class="dropdown-item danger">
+                                    退出登录</a>
+                                <a href="/admin/adminuser/mod/{{session.id}}" class="dropdown-item danger">
+                                    修改账号密码</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>

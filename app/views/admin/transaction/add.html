@@ -1,0 +1,130 @@
+{% include "public/header.html "%}
+<!-- [ 头部 ] 结束 -->
+<div class="page-header">
+    <div class="row align-items-center ml-2">
+        <div class="col">
+            <h3 class="page-title mt-2">销售管理</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin">首页</a></li>
+                <li class="breadcrumb-item "><a href="/admin/transaction">交易管理</a></li>
+                <li class="breadcrumb-item active"><a>添加订单</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <h6 class="card-header">添加交易</h6>
+                <div class="card-body">
+                    <form method="post">
+                        <div class="table-responsive">
+                            <div class="add-remove text-left">
+                                <a class="btn btn-sm btn-white text-success mr-2"><i class="fas fa-plus-circle"
+                                                                                     id="btnAdd">添加</i></a>
+                                <a class="btn btn-sm btn-white text-danger mr-2 "> <i class="fas fa-minus-circle"
+                                                                                      id="btnSub">删除</i></a>
+                            </div>
+
+                            <table class="table table-stripped table-center table-hover" id="table1">
+                                <thead>
+                                <tr>
+                                    <th>客户编号/姓名</th>
+                                    <th>商品编号/名称/价格</th>
+                                    <th>交易数量</th>
+                                    <th>交易总额</th>
+                                    <th>支付方式</th>
+                                    <th>收款人</th>
+                                    <th>交易状态</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="text-right mt-4">
+                            <button type="submit" name="do_submit" class="btn btn-primary">添加交易</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    window.onload = function () {
+        //增加或减少商品
+        $(document).ready(function () {
+            let row_number = 0;
+            //add method
+            $("#btnAdd").click(function () {
+                row_number++;
+                $("#table1").append(" <tr id=" + row_number + ">\n" +
+                    "                                            <td>\n" +
+                    "                                                <select class=\"custom-select\" name=\"goods[" + row_number + "][cid]\" >\n" +
+                    "                                                    {% for v in client %}\n" +
+                    "                                                    <option value=\"{{v.cid}}\">\n" +
+                    "                                                        {{v.cid}}/{{v.clientName}}\n" +
+                    "                                                    </option>\n" +
+                    "                                                    {%endfor%}\n" +
+                    "                                                </select>\n" +
+                    "                                            </td>                                           \n" +
+                    "                                            <td>\n" +
+                    "                                                <select class=\"custom-select\" name=\"goods[" + row_number + "][productMark]\" >\n" +
+                    "                                                    {% for v in product %}\n" +
+                    "                                                    <option value=\"{{v.productMark}}\">\n" +
+                    "                                                        {{v.productMark}}/ {{v.productName}}/{{v.saleMoney}}\n" +
+                    "                                                    </option>\n" +
+                    "                                                    {%endfor%}\n" +
+                    "                                                </select>\n" +
+                    "                                            </td>                                            \n" +
+                    "                                            <td>\n" +
+                    "                                                <input name=\"goods[" + row_number + "][TransactionNum]\" type=\"text\" class=\"form-control\"\n" +
+                    "                                                       placeholder=\"请输入交易数量\">\n" +
+                    "                                            </td>                                          \n" +
+                    "                                            <td>\n" +
+                    "                                                <input name=\"goods[" + row_number + "][totalMoney]\" value=\"\" class=\"form-control\"\n" +
+                    "                                                       placeholder=\"请输入交易总额\">\n" +
+                    "                                            </td>\n" +
+                    "                                            <td>\n" +
+                    "                                                <select class=\"custom-select\"  name=\"goods[" + row_number + "][payWay]\">\n" +
+                    "                                                    <option>支付宝</option>\n" +
+                    "                                                    <option>微信支付</option>\n" +
+                    "                                                    <option>现金</option>\n" +
+                    "                                                    <option>POS</option>\n" +
+                    "                                                </select>\n" +
+                    "                                            </td>\n" +
+                    "                                            <td>\n" +
+                    "                                                <select class=\"custom-select\"  name=\"goods[" + row_number + "][payee]\">\n" +
+                    "                                                    <option>李四</option>\n" +
+                    "                                                    <option>张三</option>\n" +
+                    "                                                </select>\n" +
+                    "                                            </td>\n" +
+                    "                                            <td>\n" +
+                    "                                                <select class=\"custom-select\" name=\"goods[" + row_number + "][status]\" >\n" +
+                    "                                                    <option>0</option>\n" +
+                    "                                                    <option>1</option>\n" +
+                    "                                                </select>\n" +
+                    "                                            </td>\n" +
+                    "                                        </tr>");
+            });
+
+            //删除方法
+            $("#btnSub").click(function () {
+                let row_number = $("#table1 tr").length;
+                $("tr[id='" + (row_number - 1) + "']").remove();
+            });
+        });
+    }
+
+</script>
+
+<script src="{{url}}/libs/laydate/laydate.js"></script>
+<script>
+    lay('#version').html('-v' + laydate.v);
+    let len = 0;
+    //执行一个laydate实例
+    laydate.render({
+        elem: '#laydate' + len //指定元素
+    });
+    len++;
+</script>
+
+{% include "public/footer.html" %}
